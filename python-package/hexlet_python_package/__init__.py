@@ -1,0 +1,1 @@
+from hexlet_python_package.core import calculate
