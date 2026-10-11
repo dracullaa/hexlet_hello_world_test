@@ -1,17 +1,21 @@
-# file: workflows/directory.yml
-name: show-directory
-# on определяет события, которые запускают воркфлоу
-on: push
+name: Say Hello
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  # build это произвольно выбранное имя задания
-  # их может быть больше одного
   build:
-    # операционная система для работы воркфлоу
     runs-on: ubuntu-latest
-    steps: # список шагов, которые надо выполнить
-      # экшен выполняет какую-то задачу
-      # checkout клонирует репозиторий
-      - uses: actions/checkout@v7
-      # run это произвольная bash-команда
-      # ls -la выведет содержимое текущего репозитория
-      - run: ls -la
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install uv
+        run: pip install uv
+      - name: Install dependencies
+        run: uv sync
+      - name: Run say-hello
+        run: uv run say-hello
